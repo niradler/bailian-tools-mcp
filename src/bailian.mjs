@@ -4,7 +4,8 @@ import { join } from "node:path";
 
 const DEFAULT_BASE_URL =
   "https://token-plan.ap-southeast-1.maas.aliyuncs.com/compatible-mode/v1";
-const DEFAULT_MODEL = "qwen3.8-flash";
+const DEFAULT_MODEL = "deepseek-v4.1-flash-1017";
+const DEFAULT_IMAGE_MODEL = "qwen3.8-max";
 const DEFAULT_TIMEOUT_MS = 180_000;
 
 function readProfileKey() {
@@ -27,6 +28,7 @@ export function readConfig() {
     keySource: fromEnv ? "env" : fromProfile ? `bailian profile "${fromProfile.profile}"` : "missing",
     baseUrl: (process.env.BAILIAN_BASE_URL?.trim() || DEFAULT_BASE_URL).replace(/\/+$/, ""),
     model: process.env.BAILIAN_MODEL?.trim() || DEFAULT_MODEL,
+    imageModel: process.env.BAILIAN_IMAGE_MODEL?.trim() || DEFAULT_IMAGE_MODEL,
     timeoutMs: Number(process.env.BAILIAN_TIMEOUT_MS) || DEFAULT_TIMEOUT_MS,
     debug: process.env.BAILIAN_DEBUG === "1",
     costNotice: process.env.BAILIAN_COST_NOTICE !== "off",

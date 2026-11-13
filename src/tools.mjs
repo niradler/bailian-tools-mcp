@@ -1,4 +1,4 @@
-import { createResponse, formatResult, summarize } from "./bailian.mjs";
+import { createResponse, formatResult, readConfig, summarize } from "./bailian.mjs";
 
 export const TOOLS = [
   {
@@ -151,6 +151,7 @@ const HANDLERS = {
         },
       ],
       tools: [{ type: "image_search" }],
+      model: readConfig().imageModel,
       maxOutputTokens: args.max_output_tokens,
     });
     return summarize(payload);
@@ -160,6 +161,7 @@ const HANDLERS = {
     const payload = await createResponse({
       input: args.query,
       tools: [{ type: "web_search_image" }],
+      model: readConfig().imageModel,
       maxOutputTokens: args.max_output_tokens,
     });
     return summarize(payload);

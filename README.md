@@ -38,11 +38,12 @@ If you already use the `bailian` CLI, you can skip the env var: with `BAILIAN_AP
 | `BAILIAN_API_KEY` | — (required unless a CLI profile exists) | Model Studio API key |
 | `BAILIAN_CONFIG` | `~/.bailian/config.json` | Path to a `bailian` CLI config; when `BAILIAN_API_KEY` is unset, the active profile's `api_key` is used |
 | `BAILIAN_BASE_URL` | `https://token-plan.ap-southeast-1.maas.aliyuncs.com/compatible-mode/v1` | OpenAI-compatible endpoint; set this for another region or a workspace URL |
-| `BAILIAN_MODEL` | `qwen3.8-flash` | Model that executes the tool call. Must support the Responses API |
+| `BAILIAN_MODEL` | `deepseek-v4.1-flash-1017` | Model that executes search, extraction and code tools. Must support the Responses API |
+| `BAILIAN_IMAGE_MODEL` | `qwen3.8-max` | Model for `image_search` and `text_to_image_search`; the DeepSeek models reject those tools |
 | `BAILIAN_TIMEOUT_MS` | `180000` | Per-request timeout |
 | `BAILIAN_DEBUG` | unset | `1` includes the raw response in the result |
 
-Any model that supports the Responses API works (`qwen3.8-flash`, `qwen3.8-max`, `qwen4-max-preview`, `deepseek-v4.1-flash-1017`, …). Tool availability varies by model; check the [built-in tools docs](https://docs.modelstudio.console.alibabacloud.com/en/model-studio/token-plan-harness-tool).
+Any model that supports the Responses API works (`deepseek-v4.1-flash-1017`, `qwen3.8-max`, `qwen3.8-flash`, `qwen4-max-preview`, …). Tool coverage varies by model: DeepSeek handles `web_search`, `web_extractor` and `code_interpreter` but rejects `image_search` / `web_search_image`, which is why the image tools use `BAILIAN_IMAGE_MODEL` (a Qwen model) independently of `BAILIAN_MODEL`. See the [built-in tools docs](https://docs.modelstudio.console.alibabacloud.com/en/model-studio/token-plan-harness-tool).
 
 ## Tools
 
@@ -137,6 +138,7 @@ The notices stay compact on purpose: the whole `tools/list` payload is about 1.5
 | `401` / `InvalidApiKey` | Key is wrong, revoked, or from another region. Token Plan keys only work on the `token-plan.*` endpoint |
 | `The web_extractor tool must be executed with web_search tool` | Use this server's `web_extract`, which always pairs them |
 | `429` | Plan rate limit or Credits exhausted — check `bailian usage token-plan` |
+| `The current model does not support the image_search tool` | Set `BAILIAN_IMAGE_MODEL` to a model that supports image tools (default `qwen3.8-max`) |
 | Tools listed but the model never calls them | The model needs tool calling; `qwen3.8-flash` and up support it. Also check the client's permission prompt |
 
 ## Security
