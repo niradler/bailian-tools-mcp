@@ -125,6 +125,8 @@ BAILIAN_TIMEOUT_MS = "180000"
 
 Each tool call is a model request plus the upstream tool fee, billed to your plan Credits or pay-as-you-go account. Web search is the expensive one: the agent policy is **$10 per 1,000 calls in Singapore** versus **$0.573411 in Frankfurt, Virginia, Hong Kong and Tokyo**. Keep `web_search` for questions that need current data; local file reads are free. Set `max_output_tokens` when you only need a short answer.
 
+The server states this in its MCP instructions and appends a footer to every result, so the agent asks before bulk work instead of quietly burning Credits. Set `BAILIAN_COST_NOTICE=off` to silence the footer if your client already enforces its own budget.
+
 ## Troubleshooting
 
 | Symptom | Cause / fix |

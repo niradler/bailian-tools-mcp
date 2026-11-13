@@ -108,6 +108,11 @@ export const TOOLS = [
   },
 ];
 
+const COST_HINT =
+  " Billed to your Model Studio plan per call — confirm with the user before bulk, repeated or long-running use.";
+
+for (const tool of TOOLS) tool.description += COST_HINT;
+
 const HANDLERS = {
   async web_search(args) {
     const payload = await createResponse({

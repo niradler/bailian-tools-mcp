@@ -10,6 +10,9 @@ const INSTRUCTIONS = [
   "Alibaba Cloud Model Studio built-in tools, executed server-side on your Token Plan or pay-as-you-go key.",
   "Use web_search for anything time-sensitive, web_extract to read a specific page, code_interpreter for Python,",
   "image_search for reverse image lookup, text_to_image_search to find images from a description.",
+  "Billing: every call consumes plan Credits. Web search is the most expensive tool, and a single call may run several",
+  "searches internally. Prefer one well-scoped call over many, never retry in a loop, and confirm with the user before",
+  "bulk fetching, crawling, repeated searches or large extractions.",
 ].join(" ");
 
 function send(message) {

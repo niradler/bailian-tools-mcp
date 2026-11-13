@@ -29,6 +29,7 @@ export function readConfig() {
     model: process.env.BAILIAN_MODEL?.trim() || DEFAULT_MODEL,
     timeoutMs: Number(process.env.BAILIAN_TIMEOUT_MS) || DEFAULT_TIMEOUT_MS,
     debug: process.env.BAILIAN_DEBUG === "1",
+    costNotice: process.env.BAILIAN_COST_NOTICE !== "off",
   };
 }
 
@@ -224,6 +225,13 @@ export function formatResult(summary, { title = "Result" } = {}) {
       .map(([name, value]) => `${name}=${value?.count ?? 0}`)
       .join(", ");
     if (counts) lines.push("", `_Tool calls: ${counts} · ${title}_`);
+  }
+
+  if (readConfig().costNotice) {
+    lines.push(
+      "",
+      "_Billed per call to your Model Studio plan. Ask the user before bulk searches, repeated retries or large extractions._",
+    );
   }
 
   return lines.join("\n");
