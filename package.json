@@ -1,0 +1,45 @@
+{
+  "name": "bailian-tools-mcp",
+  "version": "0.1.0",
+  "description": "MCP server for Alibaba Cloud Model Studio built-in tools (web search, web extractor, code interpreter, image search) over the Responses API. Works with Token Plan keys.",
+  "type": "module",
+  "bin": {
+    "bailian-tools-mcp": "bin/bailian-tools-mcp.mjs"
+  },
+  "files": [
+    "bin/",
+    "src/",
+    "README.md",
+    "SECURITY.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18.17"
+  },
+  "scripts": {
+    "start": "node bin/bailian-tools-mcp.mjs",
+    "test": "node test/smoke.mjs --offline",
+    "test:live": "node test/smoke.mjs"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "alibaba-cloud",
+    "model-studio",
+    "bailian",
+    "qwen",
+    "web-search",
+    "code-interpreter",
+    "opencode",
+    "claude-code"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/niradler/bailian-tools-mcp.git"
+  },
+  "author": "Nir Adler",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  }
+}

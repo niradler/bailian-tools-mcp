@@ -1,0 +1,37 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [20, 22, 24]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Protocol smoke test (offline)
+        run: npm test
+      - name: Package contents
+        run: npm pack --dry-run
+
+  no-secrets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fail on committed credentials
+        run: |
+          if git grep -nIE 'sk-[A-Za-z0-9._-]{20,}|gh[pousr]_[A-Za-z0-9]{20,}|AKIA[0-9A-Z]{16}|-----BEGIN [A-Z ]*PRIVATE KEY-----' -- . ':!package-lock.json'; then
+            echo "::error::A credential-like string is committed. Revoke it and remove it from history."
+            exit 1
+          fi
+          echo "No credential-like strings found."

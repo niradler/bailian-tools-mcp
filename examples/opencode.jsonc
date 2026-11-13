@@ -1,0 +1,14 @@
+// OpenCode 1.x (this file's shape): `mcp` maps name -> server.
+// OpenCode 2.x: wrap in `"servers": { ... }` under `mcp`.
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "bailian-tools": {
+      "type": "local",
+      "command": ["npx", "-y", "bailian-tools-mcp"],
+      "environment": {
+        "BAILIAN_API_KEY": "{env:BAILIAN_API_KEY}"
+      }
+    }
+  }
+}
