@@ -87,16 +87,13 @@ try {
   );
 
   if (!offline) {
-    if (!process.env.BAILIAN_API_KEY) {
-      throw new Error("BAILIAN_API_KEY is required for the live test (or pass --offline).");
-    }
     const call = await request(
       "tools/call",
       { name: "web_search", arguments: { query: "What is the latest Node.js LTS version?" } },
       120_000,
     );
     const text = call.result?.content?.[0]?.text ?? "";
-    assert(!call.result?.isError, "live web_search call is not an error");
+    assert(!call.result?.isError, `live web_search call is not an error (${text.slice(0, 160)})`);
     assert(text.length > 40, "live web_search returns text");
     console.log("\n--- live result ---\n" + text.slice(0, 800));
   } else {

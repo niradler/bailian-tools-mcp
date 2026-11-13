@@ -33,7 +33,8 @@ The process speaks MCP over stdio and logs to stderr. Nothing is written to disk
 
 | Variable | Default | Purpose |
 | --- | --- | --- |
-| `BAILIAN_API_KEY` | — (required) | Model Studio API key |
+| `BAILIAN_API_KEY` | — (required unless a CLI profile exists) | Model Studio API key |
+| `BAILIAN_CONFIG` | `~/.bailian/config.json` | Path to a `bailian` CLI config; when `BAILIAN_API_KEY` is unset, the active profile's `api_key` is used |
 | `BAILIAN_BASE_URL` | `https://token-plan.ap-southeast-1.maas.aliyuncs.com/compatible-mode/v1` | OpenAI-compatible endpoint; set this for another region or a workspace URL |
 | `BAILIAN_MODEL` | `qwen3.8-flash` | Model that executes the tool call. Must support the Responses API |
 | `BAILIAN_TIMEOUT_MS` | `180000` | Per-request timeout |

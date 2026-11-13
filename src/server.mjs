@@ -91,9 +91,9 @@ function toolError(message) {
 
 export function run() {
   const config = readConfig();
-  log(`ready · ${config.baseUrl} · model ${config.model} · key ${config.apiKey ? "set" : "MISSING"}`);
+  log(`ready · ${config.baseUrl} · model ${config.model} · key ${config.keySource}`);
   if (!config.apiKey) {
-    log("BAILIAN_API_KEY is empty: tools will return an authentication error until it is set.");
+    log("No API key: set BAILIAN_API_KEY or log in with the bailian CLI. Tools will return an authentication error until then.");
   }
 
   const rl = createInterface({ input: process.stdin, crlfDelay: Infinity });

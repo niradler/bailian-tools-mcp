@@ -1,11 +1,30 @@
+import { readFileSync } from "node:fs";
+import { homedir } from "node:os";
+import { join } from "node:path";
+
 const DEFAULT_BASE_URL =
   "https://token-plan.ap-southeast-1.maas.aliyuncs.com/compatible-mode/v1";
 const DEFAULT_MODEL = "qwen3.8-flash";
 const DEFAULT_TIMEOUT_MS = 180_000;
 
+function readProfileKey() {
+  const path = process.env.BAILIAN_CONFIG?.trim() || join(homedir(), ".bailian", "config.json");
+  try {
+    const profile = JSON.parse(readFileSync(path, "utf8"));
+    const name = profile.active_config;
+    const key = name ? profile[name]?.api_key : undefined;
+    return typeof key === "string" && key.trim() ? { key: key.trim(), path, profile: name } : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
 export function readConfig() {
+  const fromEnv = process.env.BAILIAN_API_KEY?.trim();
+  const fromProfile = fromEnv ? undefined : readProfileKey();
   return {
-    apiKey: process.env.BAILIAN_API_KEY?.trim() ?? "",
+    apiKey: fromEnv || fromProfile?.key || "",
+    keySource: fromEnv ? "env" : fromProfile ? `bailian profile "${fromProfile.profile}"` : "missing",
     baseUrl: (process.env.BAILIAN_BASE_URL?.trim() || DEFAULT_BASE_URL).replace(/\/+$/, ""),
     model: process.env.BAILIAN_MODEL?.trim() || DEFAULT_MODEL,
     timeoutMs: Number(process.env.BAILIAN_TIMEOUT_MS) || DEFAULT_TIMEOUT_MS,
@@ -26,7 +45,7 @@ export async function createResponse({ input, tools, model, maxOutputTokens = 40
   const config = readConfig();
   if (!config.apiKey) {
     throw new BailianError(
-      "BAILIAN_API_KEY is not set. Create a Model Studio API key and export it before starting the server.",
+      "No API key. Set BAILIAN_API_KEY, or run `bailian auth login --api-key <key>` so the active profile in ~/.bailian/config.json can be used.",
     );
   }
 
