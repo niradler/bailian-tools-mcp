@@ -127,6 +127,8 @@ Each tool call is a model request plus the upstream tool fee, billed to your pla
 
 The server states this in its MCP instructions and appends a footer to every result, so the agent asks before bulk work instead of quietly burning Credits. Set `BAILIAN_COST_NOTICE=off` to silence the footer if your client already enforces its own budget.
 
+The notices stay compact on purpose: the whole `tools/list` payload is about 1.5 k characters (~390 tokens), because tool descriptions ride along on every request. Run `npm run describe` to print exactly what your agent receives.
+
 ## Troubleshooting
 
 | Symptom | Cause / fix |

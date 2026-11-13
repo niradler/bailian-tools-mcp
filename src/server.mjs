@@ -8,20 +8,12 @@ const SERVER_INFO = {
   title: "Alibaba Cloud Model Studio tools",
   version: "0.1.0",
   description:
-    "Web search, web extraction, Python code interpreter and image search executed server-side by Alibaba Cloud Model Studio. Every tool call is billed to your Model Studio plan (Credits or pay-as-you-go), so ask the user before bulk or repeated use.",
+    "Alibaba Cloud Model Studio built-in tools: web search, page extraction, Python sandbox, image search. Every call is billed to your Model Studio plan.",
 };
 const SUPPORTED_PROTOCOLS = new Set(["2024-11-05", "2025-03-26", "2025-06-18"]);
 
-const INSTRUCTIONS = [
-  "Alibaba Cloud Model Studio built-in tools, executed server-side on your Token Plan or pay-as-you-go key.",
-  "Use web_search for anything time-sensitive, web_extract to read a specific page, code_interpreter for Python,",
-  "image_search for reverse image lookup, text_to_image_search to find images from a description.",
-  "Cost: every call consumes plan Credits. Web search is billed at about $10 per 1,000 searches in Singapore",
-  "(about $0.57 per 1,000 in Frankfurt, Virginia, Hong Kong and Tokyo) plus the model tokens it reads, and one call",
-  "may run several searches internally. Web extraction is free for now; the code interpreter bills per invocation.",
-  "Prefer one well-scoped call over many, never retry in a loop, and confirm with the user before bulk fetching,",
-  "crawling, repeated searches or large extractions.",
-].join(" ");
+const INSTRUCTIONS =
+  "Model Studio built-in tools run server-side and bill your plan per call: web search ~$10 per 1,000 searches in Singapore (~$0.57 elsewhere), extraction free for now, code interpreter per run. Prefer one well-scoped call and ask the user before bulk or repeated use.";
 
 function send(message) {
   process.stdout.write(`${JSON.stringify(message)}\n`);

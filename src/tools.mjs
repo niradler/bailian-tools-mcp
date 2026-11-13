@@ -1,11 +1,5 @@
 import { createResponse, formatResult, summarize } from "./bailian.mjs";
 
-const modelProperty = {
-  type: "string",
-  description:
-    "Optional Model Studio model id to run the tool call with. Defaults to the server's BAILIAN_MODEL.",
-};
-
 export const TOOLS = [
   {
     name: "web_search",
@@ -22,7 +16,6 @@ export const TOOLS = [
           type: "number",
           description: "Upper bound on the answer length in tokens (default 4096).",
         },
-        model: modelProperty,
       },
     },
   },
@@ -47,7 +40,6 @@ export const TOOLS = [
           description: "What to pull out of the pages. Defaults to the main content.",
         },
         max_output_tokens: { type: "number" },
-        model: modelProperty,
       },
     },
   },
@@ -66,7 +58,6 @@ export const TOOLS = [
           description: "The computation or analysis to perform, including any inline data.",
         },
         max_output_tokens: { type: "number" },
-        model: modelProperty,
       },
     },
   },
@@ -86,7 +77,6 @@ export const TOOLS = [
           description: "Optional guidance, e.g. 'find where this photo was published'.",
         },
         max_output_tokens: { type: "number" },
-        model: modelProperty,
       },
     },
   },
@@ -102,14 +92,13 @@ export const TOOLS = [
       properties: {
         query: { type: "string", description: "Description of the images to find." },
         max_output_tokens: { type: "number" },
-        model: modelProperty,
       },
     },
   },
 ];
 
 const COST_HINT =
-  " Billing: each call is charged to your Model Studio plan (web search approximately $10 per 1,000 calls in Singapore, about $0.57 elsewhere, per search the model runs). Confirm with the user before bulk, repeated or long-running use.";
+  " Billed to your Model Studio plan (~$10/1k web searches in Singapore) — ask before bulk use.";
 
 for (const tool of TOOLS) tool.description += COST_HINT;
 
@@ -118,7 +107,6 @@ const HANDLERS = {
     const payload = await createResponse({
       input: args.query,
       tools: [{ type: "web_search" }],
-      model: args.model,
       maxOutputTokens: args.max_output_tokens,
       instructions:
         "Search the web and answer the question with concrete, recently published facts. Cite the pages you used.",
@@ -134,7 +122,6 @@ const HANDLERS = {
       input,
       // Model Studio rejects web_extractor unless web_search is requested too.
       tools: [{ type: "web_search" }, { type: "web_extractor" }],
-      model: args.model,
       maxOutputTokens: args.max_output_tokens,
     });
     return summarize(payload);
@@ -144,7 +131,6 @@ const HANDLERS = {
     const payload = await createResponse({
       input: args.task,
       tools: [{ type: "code_interpreter" }],
-      model: args.model,
       maxOutputTokens: args.max_output_tokens,
       instructions:
         "Solve the task with Python in the sandbox, then report the result briefly and show the values you computed.",
@@ -165,7 +151,6 @@ const HANDLERS = {
         },
       ],
       tools: [{ type: "image_search" }],
-      model: args.model,
       maxOutputTokens: args.max_output_tokens,
     });
     return summarize(payload);
@@ -175,7 +160,6 @@ const HANDLERS = {
     const payload = await createResponse({
       input: args.query,
       tools: [{ type: "web_search_image" }],
-      model: args.model,
       maxOutputTokens: args.max_output_tokens,
     });
     return summarize(payload);
