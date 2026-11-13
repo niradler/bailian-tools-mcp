@@ -109,7 +109,7 @@ export const TOOLS = [
 ];
 
 const COST_HINT =
-  " Billed to your Model Studio plan per call — confirm with the user before bulk, repeated or long-running use.";
+  " Billing: each call is charged to your Model Studio plan (web search approximately $10 per 1,000 calls in Singapore, about $0.57 elsewhere, per search the model runs). Confirm with the user before bulk, repeated or long-running use.";
 
 for (const tool of TOOLS) tool.description += COST_HINT;
 

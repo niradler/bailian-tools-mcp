@@ -3,16 +3,24 @@ import { createInterface } from "node:readline";
 import { TOOLS, callTool } from "./tools.mjs";
 import { readConfig } from "./bailian.mjs";
 
-const SERVER_INFO = { name: "bailian-tools-mcp", version: "0.1.0" };
+const SERVER_INFO = {
+  name: "bailian-tools-mcp",
+  title: "Alibaba Cloud Model Studio tools",
+  version: "0.1.0",
+  description:
+    "Web search, web extraction, Python code interpreter and image search executed server-side by Alibaba Cloud Model Studio. Every tool call is billed to your Model Studio plan (Credits or pay-as-you-go), so ask the user before bulk or repeated use.",
+};
 const SUPPORTED_PROTOCOLS = new Set(["2024-11-05", "2025-03-26", "2025-06-18"]);
 
 const INSTRUCTIONS = [
   "Alibaba Cloud Model Studio built-in tools, executed server-side on your Token Plan or pay-as-you-go key.",
   "Use web_search for anything time-sensitive, web_extract to read a specific page, code_interpreter for Python,",
   "image_search for reverse image lookup, text_to_image_search to find images from a description.",
-  "Billing: every call consumes plan Credits. Web search is the most expensive tool, and a single call may run several",
-  "searches internally. Prefer one well-scoped call over many, never retry in a loop, and confirm with the user before",
-  "bulk fetching, crawling, repeated searches or large extractions.",
+  "Cost: every call consumes plan Credits. Web search is billed at about $10 per 1,000 searches in Singapore",
+  "(about $0.57 per 1,000 in Frankfurt, Virginia, Hong Kong and Tokyo) plus the model tokens it reads, and one call",
+  "may run several searches internally. Web extraction is free for now; the code interpreter bills per invocation.",
+  "Prefer one well-scoped call over many, never retry in a loop, and confirm with the user before bulk fetching,",
+  "crawling, repeated searches or large extractions.",
 ].join(" ");
 
 function send(message) {

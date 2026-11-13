@@ -19,7 +19,8 @@
   "scripts": {
     "start": "node bin/bailian-tools-mcp.mjs",
     "test": "node test/smoke.mjs --offline",
-    "test:live": "node test/smoke.mjs"
+    "test:live": "node test/smoke.mjs",
+    "describe": "node test/describe.mjs"
   },
   "keywords": [
     "mcp",
