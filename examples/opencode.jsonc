@@ -5,7 +5,7 @@
   "mcp": {
     "bailian-tools": {
       "type": "local",
-      "command": ["npx", "-y", "bailian-tools-mcp"],
+      "command": ["npx", "-y", "github:niradler/bailian-tools-mcp"],
       "environment": {
         "BAILIAN_API_KEY": "{env:BAILIAN_API_KEY}"
       }

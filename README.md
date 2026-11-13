@@ -24,7 +24,7 @@ So this server does the one missing hop: MCP tools → Responses API built-in to
 
 ```bash
 export BAILIAN_API_KEY=sk-...      # PowerShell: $env:BAILIAN_API_KEY = "sk-..."
-npx -y bailian-tools-mcp
+npx -y github:niradler/bailian-tools-mcp
 ```
 
 The process speaks MCP over stdio and logs to stderr. Nothing is written to disk.
@@ -63,7 +63,7 @@ Any model that supports the Responses API works (`qwen3.8-flash`, `qwen3.8-max`,
   "mcp": {
     "bailian-tools": {
       "type": "local",
-      "command": ["npx", "-y", "bailian-tools-mcp"],
+      "command": ["npx", "-y", "github:niradler/bailian-tools-mcp"],
       "environment": {
         "BAILIAN_API_KEY": "{env:BAILIAN_API_KEY}"
       }
@@ -80,7 +80,7 @@ Any model that supports the Responses API works (`qwen3.8-flash`, `qwen3.8-max`,
     "servers": {
       "bailian-tools": {
         "type": "local",
-        "command": ["npx", "-y", "bailian-tools-mcp"],
+        "command": ["npx", "-y", "github:niradler/bailian-tools-mcp"],
         "environment": {
           "BAILIAN_API_KEY": "{env:BAILIAN_API_KEY}"
         }
@@ -93,7 +93,7 @@ Any model that supports the Responses API works (`qwen3.8-flash`, `qwen3.8-max`,
 Or from the CLI:
 
 ```bash
-opencode mcp add bailian-tools --env BAILIAN_API_KEY={env:BAILIAN_API_KEY} -- npx -y bailian-tools-mcp
+opencode mcp add bailian-tools --env BAILIAN_API_KEY={env:BAILIAN_API_KEY} -- npx -y github:niradler/bailian-tools-mcp
 opencode mcp list
 ```
 
@@ -102,7 +102,7 @@ Set `BAILIAN_API_KEY` in your shell profile (`setx BAILIAN_API_KEY "sk-..."` on 
 ## Claude Code
 
 ```bash
-claude mcp add bailian-tools -e BAILIAN_API_KEY=sk-... -- npx -y bailian-tools-mcp
+claude mcp add bailian-tools -e BAILIAN_API_KEY=sk-... -- npx -y github:niradler/bailian-tools-mcp
 ```
 
 ## Codex
