@@ -29,6 +29,8 @@ npx -y github:niradler/bailian-tools-mcp
 
 The process speaks MCP over stdio and logs to stderr. Nothing is written to disk.
 
+If you already use the `bailian` CLI, you can skip the env var: with `BAILIAN_API_KEY` unset, the server uses the active profile in `~/.bailian/config.json`.
+
 ### Environment variables
 
 | Variable | Default | Purpose |
